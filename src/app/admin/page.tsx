@@ -72,8 +72,13 @@ export default function AdminPage() {
     setAuthError("");
 
     try {
+      let loginEmail = email.trim();
+      if (loginEmail.toLowerCase() === "admin") {
+        loginEmail = "admin@whoopdown.com";
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
+        email: loginEmail,
         password: password.trim()
       });
 
@@ -160,10 +165,10 @@ export default function AdminPage() {
 
           <form onSubmit={handleLogin} className="space-y-4 font-sans text-xs">
             <div className="space-y-1">
-              <label className="text-[10px] font-mono text-white/40 uppercase block">Operator Email</label>
+              <label className="text-[10px] font-mono text-white/40 uppercase block">Operator Username</label>
               <input
-                type="email"
-                placeholder="admin@whoopdown.com"
+                type="text"
+                placeholder="admin"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 focus:border-whoop-green/40 text-xs px-4 py-2.5 rounded-xl outline-none text-white transition-all font-mono"
